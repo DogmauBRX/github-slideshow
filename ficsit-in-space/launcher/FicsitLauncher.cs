@@ -144,15 +144,31 @@ static class FicsitLauncher
         if (!Directory.Exists(worlds)) { Log("no CustomWorlds folder at " + worlds); return; }
         if (savesRoot == null)
             savesRoot = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"), "Saves");
-        if (!Directory.Exists(savesRoot)) { Log("no Space Engineers saves folder yet at " + savesRoot + "; start Space Engineers once"); return; }
-
         string source = PickTemplate(worlds);
         if (source == null) { Log("no Space Engineers world template found to start from"); return; }
 
-        foreach (var user in Directory.GetDirectories(savesRoot))
+        // One folder per Steam account. A player who never saved has none yet: use the
+        // account Steam is signed in with.
+        var users = new List<string>();
+        if (Directory.Exists(savesRoot))
+            foreach (var d in Directory.GetDirectories(savesRoot))
+            {
+                ulong n;
+                if (ulong.TryParse(Path.GetFileName(d), out n)) users.Add(d);
+            }
+        if (users.Count == 0)
         {
-            ulong id;
-            if (!ulong.TryParse(Path.GetFileName(user), out id)) continue; // one folder per Steam account
+            string steamId = CurrentSteamId(seDir);
+            if (steamId == null) { Log("no Space Engineers account folder in " + savesRoot + " and no Steam account found"); return; }
+            string d = Path.Combine(savesRoot, steamId);
+            Directory.CreateDirectory(d);
+            users.Add(d);
+            Log("created saves folder for Steam account " + steamId);
+        }
+
+        foreach (var user in users)
+        {
+            ulong id = ulong.Parse(Path.GetFileName(user));
             string target = Path.Combine(user, WorldName);
             if (Directory.Exists(target))
             {
@@ -173,6 +189,62 @@ static class FicsitLauncher
             }
             Log(modAdded ? "world ready with the mod enabled" : "WARNING: could not enable the mod in the world");
         }
+    }
+
+    // SteamID64 of the most recent Steam login, from Steam's config/loginusers.vdf.
+    static string CurrentSteamId(string seDir)
+    {
+        var candidates = new List<string>();
+        try
+        {
+            object v = Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
+            if (v is string) candidates.Add((string)v);
+        }
+        catch (Exception e) { Log("registry: " + e.Message); }
+        // the game usually sits in <steam>/steamapps/common/SpaceEngineers
+        var up = Directory.GetParent(Path.GetFullPath(seDir));
+        for (int i = 0; i < 2 && up != null; i++) up = up.Parent; // common -> steamapps -> steam
+        if (up != null) candidates.Add(up.FullName);
+
+        foreach (var steam in candidates)
+        {
+            string vdf = Path.Combine(Path.Combine(steam, "config"), "loginusers.vdf");
+            if (!File.Exists(vdf)) continue;
+            string found = ParseLoginUsers(File.ReadAllText(vdf));
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    // "users" { "7656119...": { ... "MostRecent" "1" ... } }
+    public static string ParseLoginUsers(string vdf)
+    {
+        string first = null;
+        int i = 0;
+        while (true)
+        {
+            int q = vdf.IndexOf('"', i);
+            if (q < 0) break;
+            int e = vdf.IndexOf('"', q + 1);
+            if (e < 0) break;
+            string tok = vdf.Substring(q + 1, e - q - 1);
+            i = e + 1;
+            ulong n;
+            if (tok.Length == 17 && ulong.TryParse(tok, out n))
+            {
+                if (first == null) first = tok;
+                int open = vdf.IndexOf('{', i), close = vdf.IndexOf('}', i);
+                if (open >= 0 && close > open)
+                {
+                    string block = vdf.Substring(open, close - open);
+                    int m = block.IndexOf("\"MostRecent\"", StringComparison.OrdinalIgnoreCase);
+                    if (m >= 0 && block.IndexOf("\"1\"", m + 12, StringComparison.Ordinal) >= 0
+                        && block.IndexOf("\"1\"", m + 12, StringComparison.Ordinal) - (m + 12) < 8)
+                        return tok;
+                }
+            }
+        }
+        return first;
     }
 
     static string PickTemplate(string worlds)
