@@ -1,0 +1,13 @@
+{
+  "_doc": "Every point where the mashup touches either game. verified = checked against real game/API source (ref) or still needs the running game.",
+  "columns": ["key", "game", "what", "api", "when", "verified"],
+  "rows": [
+    {"key": "ReadSatDocs",    "game": "satisfactory",    "what": "Read the player's Satisfactory Docs file (UTF-16 JSON) linked into the mod folder by Melty", "api": "MyAPIGateway.Utilities.ReadFileInModLocation(Satisfactory/Docs.json)", "when": "LoadData", "verified": "needs-game"},
+    {"key": "NameItems",      "game": "space-engineers", "what": "Set item display name/description from Docs mDisplayName/mDescription", "api": "MyPhysicalItemDefinition.DisplayNameString/DescriptionString", "when": "LoadData", "verified": "needs-game"},
+    {"key": "LookItems",      "game": "space-engineers", "what": "Reuse model/icon of looksLike vanilla component", "api": "MyPhysicalItemDefinition.Model/Icons", "when": "LoadData", "verified": "needs-game"},
+    {"key": "RecipeAmounts",  "game": "space-engineers", "what": "Set blueprint prerequisites/results/time from Docs mIngredients/mProduct/mManufactoringDuration", "api": "MyBlueprintDefinitionBase.Prerequisites/Results/BaseProductionTimeInSeconds (public fields, KSH source)", "when": "LoadData", "verified": "api-source"},
+    {"key": "UndoEdits",      "game": "space-engineers", "what": "Restore every edited definition on unload", "api": "MySessionComponentBase.UnloadData", "when": "UnloadData", "verified": "api-source"},
+    {"key": "StartKit",       "game": "space-engineers", "what": "Give kit.json once per player per world", "api": "IMyInventory.AddItems + MyAPIGateway.Utilities.Get/SetVariable", "when": "UpdateAfterSimulation", "verified": "needs-game"},
+    {"key": "SpaceElevator",  "game": "space-engineers", "what": "Cargo container named 'Space Elevator' consumes phase items, shows progress, completes phase", "api": "MyGameLogicComponent on MyObjectBuilder_CargoContainer, IMyInventory.RemoveItemsOfType, AppendingCustomInfo", "when": "UpdateAfterSimulation100", "verified": "needs-game"}
+  ]
+}

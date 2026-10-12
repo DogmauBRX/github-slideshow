@@ -1,0 +1,7 @@
+{
+  "_doc": "Space Elevator phases (design rule, mirrors Satisfactory's Phase 1 order). item references items.json key.",
+  "columns": ["phase", "item", "amount"],
+  "rows": [
+    {"phase": 1, "item": "SmartPlating", "amount": 50}
+  ]
+}

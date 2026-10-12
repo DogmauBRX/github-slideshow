@@ -1,0 +1,12 @@
+{
+  "_doc": "Starting kit given once per player per world. item references items.json key.",
+  "columns": ["item", "amount"],
+  "rows": [
+    {"item": "IronPlate", "amount": 30},
+    {"item": "IronRod", "amount": 20},
+    {"item": "Screw", "amount": 100},
+    {"item": "ReinforcedIronPlate", "amount": 2},
+    {"item": "Rotor", "amount": 2},
+    {"item": "SmartPlating", "amount": 1}
+  ]
+}

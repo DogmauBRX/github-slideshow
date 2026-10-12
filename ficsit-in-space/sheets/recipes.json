@@ -1,0 +1,12 @@
+{
+  "_doc": "One row per Satisfactory recipe brought into the SE Assembler. Ingredient/product amounts and duration are read at runtime from the player's Satisfactory Docs file (satRecipe) and mapped through items.json satClass->seId. The SBC carries only placeholder amounts; output names the item key the blueprint makes (used for the SBC placeholder and to verify the Docs product).",
+  "columns": ["key", "satRecipe", "seBlueprint", "seBlueprintClass", "output"],
+  "rows": [
+    {"key": "IronPlate",           "satRecipe": "Recipe_IronPlate_C",           "seBlueprint": "FIS_BP_IronPlate",           "seBlueprintClass": "Components", "output": "IronPlate"},
+    {"key": "IronRod",             "satRecipe": "Recipe_IronRod_C",             "seBlueprint": "FIS_BP_IronRod",             "seBlueprintClass": "Components", "output": "IronRod"},
+    {"key": "Screw",               "satRecipe": "Recipe_Screw_C",               "seBlueprint": "FIS_BP_Screw",               "seBlueprintClass": "Components", "output": "Screw"},
+    {"key": "ReinforcedIronPlate", "satRecipe": "Recipe_IronPlateReinforced_C", "seBlueprint": "FIS_BP_ReinforcedIronPlate", "seBlueprintClass": "Components", "output": "ReinforcedIronPlate"},
+    {"key": "Rotor",               "satRecipe": "Recipe_Rotor_C",               "seBlueprint": "FIS_BP_Rotor",               "seBlueprintClass": "Components", "output": "Rotor"},
+    {"key": "SmartPlating",        "satRecipe": "Recipe_SpaceElevatorPart_1_C", "seBlueprint": "FIS_BP_SmartPlating",        "seBlueprintClass": "Components", "output": "SmartPlating"}
+  ]
+}

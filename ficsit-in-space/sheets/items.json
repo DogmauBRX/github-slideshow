@@ -1,0 +1,14 @@
+{
+  "_doc": "One row per item the mashup uses. Names and descriptions are NOT stored here: they are read at runtime from the player's own Satisfactory Docs file (satClass). seId is the Space Engineers item id. kind=new means this mod defines the item; kind=vanilla maps a Satisfactory item onto an existing SE item. looksLike = vanilla SE component whose model and icon are reused (copied from the loaded definition at runtime).",
+  "columns": ["key", "satClass", "kind", "seId", "looksLike", "mass", "volume", "maxIntegrity"],
+  "rows": [
+    {"key": "IronOre",             "satClass": "Desc_OreIron_C",              "kind": "vanilla", "seId": "Ore/Iron",                   "looksLike": "-",            "mass": "-",  "volume": "-",  "maxIntegrity": "-"},
+    {"key": "IronIngot",           "satClass": "Desc_IronIngot_C",            "kind": "vanilla", "seId": "Ingot/Iron",                 "looksLike": "-",            "mass": "-",  "volume": "-",  "maxIntegrity": "-"},
+    {"key": "IronPlate",           "satClass": "Desc_IronPlate_C",            "kind": "new",     "seId": "Component/FIS_IronPlate",    "looksLike": "InteriorPlate","mass": 3,    "volume": 1,    "maxIntegrity": 30},
+    {"key": "IronRod",             "satClass": "Desc_IronRod_C",              "kind": "new",     "seId": "Component/FIS_IronRod",      "looksLike": "SmallTube",    "mass": 2,    "volume": 1,    "maxIntegrity": 20},
+    {"key": "Screw",               "satClass": "Desc_IronScrew_C",            "kind": "new",     "seId": "Component/FIS_Screw",        "looksLike": "Construction", "mass": 0.25, "volume": 0.1,  "maxIntegrity": 5},
+    {"key": "ReinforcedIronPlate", "satClass": "Desc_IronPlateReinforced_C",  "kind": "new",     "seId": "Component/FIS_ReinforcedIronPlate", "looksLike": "SteelPlate", "mass": 15, "volume": 3, "maxIntegrity": 100},
+    {"key": "Rotor",               "satClass": "Desc_Rotor_C",                "kind": "new",     "seId": "Component/FIS_Rotor",        "looksLike": "Motor",        "mass": 12,   "volume": 4,    "maxIntegrity": 60},
+    {"key": "SmartPlating",        "satClass": "Desc_SpaceElevatorPart_1_C",  "kind": "new",     "seId": "Component/FIS_SmartPlating", "looksLike": "MetalGrid",    "mass": 25,   "volume": 8,    "maxIntegrity": 150}
+  ]
+}
