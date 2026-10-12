@@ -52,3 +52,7 @@
 1. Docs is UTF-16. `SatDocs.Clean` strips NULs if a reader decodes it as 8-bit.
 2. A component without a blueprint can crash SE, so the preflight requires a recipe for
    every new item.
+- Uploaded and submitted release 0.1.0 as a draft (release fc541b19-c094-41f8-a3a9-2b48dd43b629;
+  one click: yes). Test b0679b77-97fd-4696-8378-a49926585f6d was started and waits for Melty
+  on the creator's PC.
+- The creator said not to publish: the listing stays a private draft.
