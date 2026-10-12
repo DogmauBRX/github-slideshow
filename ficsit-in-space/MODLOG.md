@@ -32,8 +32,21 @@
 - That SE compiles and loads the scripts against its real ModAPI whitelist.
 - That item names, recipes, kit and Space Elevator work in game.
 - The one-click start: a world with this mod enabled (SE loads local mods per world).
-- The Melty recipe, its file mapping, the release test and the screenshot. melty.gg is
-  blocked by this cloud session's network policy.
+- The release test and the screenshot.
+
+## Melty (draft id be5a270c-144c-4d1c-94d1-09693132ac66, slug ficsit-in-space)
+- game_info: neither game has a loader Melty installs, so the mod must be plain files. An SE
+  local mod is plain files.
+- Recipe mappings only take uploaded files, so `launcher/FicsitLauncher.cs` (.NET Framework 4
+  exe, built with mcs) runs first on every Play (`recipe.together`, startFirst). It reads
+  `{game:satisfactory}` Docs and writes the 14 classes the sheets use to
+  `FicsitInSpace/Satisfactory/Docs.json`. It also makes a "FICSIT in Space" world in
+  `%AppData%/SpaceEngineers/Saves/<steamid>/` from one of SE's own CustomWorlds templates,
+  with the mod enabled (SE has no launch argument to load a world). It doesn't write into the
+  game folder, because validate_recipe forbids that.
+- validate_recipe: valid. one_click_check: yes.
+- Upload blocked: this session's network policy refuses the storage host
+  (`*.storage.supabase.co`).
 
 ## Gotchas
 1. Docs is UTF-16. `SatDocs.Clean` strips NULs if a reader decodes it as 8-bit.

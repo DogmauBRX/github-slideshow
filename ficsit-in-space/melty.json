@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    {"slug": "space-engineers", "role": "primary"},
+    {"slug": "satisfactory", "role": "companion"}
+  ],
+  "components": [
+    {"id": "main", "fileName": "FicsitInSpace-*.zip", "label": "FICSIT in Space (Space Engineers mod + launcher)", "kind": "main", "required": true}
+  ],
+  "requirements": [],
+  "mappings": [
+    {"component": "main", "from": "", "to": "{appdata}/SpaceEngineers/Mods"}
+  ],
+  "together": [
+    {
+      "launch": {
+        "kind": "exe",
+        "path": "{appdata}/SpaceEngineers/Mods/FicsitInSpace/Launcher/FicsitLauncher.exe",
+        "env": {"FIS_SATISFACTORY": "{game:satisfactory}", "FIS_SPACEENGINEERS": "{game}"}
+      },
+      "startFirst": true,
+      "waitSeconds": 15,
+      "hidden": true
+    }
+  ],
+  "launch": {"kind": "game", "args": ["-skipintro"]},
+  "runtimeData": [
+    "{appdata}/SpaceEngineers/Mods/FicsitInSpace/Satisfactory"
+  ],
+  "notes": {
+    "firstLaunch": "In Space Engineers choose Load Game, then the \"FICSIT in Space\" world (made for you with the mod turned on). You get a FICSIT starter kit; name a cargo container \"Space Elevator\" and deliver 50 Smart Plating."
+  }
+}
